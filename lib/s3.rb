@@ -41,5 +41,12 @@ module S3
     def secret_access_key
       @secret_access_key
     end
+
+    def configure(host:, port:, access_key_id:, secret_access_key:)
+      @host ||= host
+      @port ||= port
+      @access_key_id ||= access_key_id
+      @secret_access_key ||= secret_access_key
+    end
   end
 end

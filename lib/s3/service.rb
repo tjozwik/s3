@@ -40,9 +40,6 @@ module S3
       @timeout = options.fetch(:timeout, 60)
       @debug = options.fetch(:debug, false)
 
-      S3.host = options.fetch(:endpoint, S3.host)
-      S3.port = options.fetch(:port, S3.port)
-
       raise ArgumentError, "Missing proxy settings. Must specify at least :host." if options[:proxy] && !options[:proxy][:host]
       @proxy = options.fetch(:proxy, nil)
     end

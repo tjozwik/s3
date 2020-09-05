@@ -33,6 +33,7 @@ module S3
 
       @access_key_id = options.fetch(:access_key_id)
       @secret_access_key = options.fetch(:secret_access_key)
+      S3.host = options.fetch(:endpoint, S3.host)
       @use_ssl = options.fetch(:use_ssl, false)
       @use_vhost = options.fetch(:use_vhost, true)
       @timeout = options.fetch(:timeout, 60)

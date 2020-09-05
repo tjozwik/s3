@@ -24,11 +24,12 @@ require "s3/version"
 
 module S3
   class << self
-    attr_writer :host # Default host serving S3 stuff
+    attr_writer :host, :port
+
     def host
-      @host ||= "s3.amazonaws.com"
+      @host
     end
-    attr_writer :port
+
     def port
       @port
     end

@@ -24,20 +24,24 @@ module S3
     #   (false by default)
     # * <tt>:timeout</tt> - Timeout to use by the Net::HTTP object
     #   (60 by default)
-    def initialize(options)
+    def initialize(*args)
       # The keys for these required options might exist in the options hash, but
       # they might be set to something like `nil`. If this is the case, we want
       # to fail early.
-      raise ArgumentError, "Missing :access_key_id." if !options[:access_key_id]
-      raise ArgumentError, "Missing :secret_access_key." if !options[:secret_access_key]
+      options = args.first || {}
 
-      @access_key_id = options.fetch(:access_key_id)
-      @secret_access_key = options.fetch(:secret_access_key)
-      S3.host = options.fetch(:endpoint, S3.host)
+      raise ArgumentError, "Missing :access_key_id." if !options[:access_key_id] && S3.access_key_id.nil?
+      raise ArgumentError, "Missing :secret_access_key." if !options[:secret_access_key] && S3.secret_access_key.nil?
+
+      @access_key_id = options.fetch(:access_key_id, S3.access_key_id)
+      @secret_access_key = options.fetch(:secret_access_key, S3.secret_access_key)
       @use_ssl = options.fetch(:use_ssl, false)
       @use_vhost = options.fetch(:use_vhost, true)
       @timeout = options.fetch(:timeout, 60)
       @debug = options.fetch(:debug, false)
+
+      S3.host = options.fetch(:endpoint, S3.host)
+      S3.port = options.fetch(:port, S3.port)
 
       raise ArgumentError, "Missing proxy settings. Must specify at least :host." if options[:proxy] && !options[:proxy][:host]
       @proxy = options.fetch(:proxy, nil)

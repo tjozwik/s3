@@ -24,7 +24,7 @@ require "s3/version"
 
 module S3
   class << self
-    attr_writer :host, :port
+    attr_writer :host, :port, :access_key_id, :secret_access_key
 
     def host
       @host
@@ -32,6 +32,14 @@ module S3
 
     def port
       @port
+    end
+
+    def access_key_id
+      @access_key_id
+    end
+
+    def secret_access_key
+      @secret_access_key
     end
   end
 end
